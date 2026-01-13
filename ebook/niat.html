@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niat Sholat - GuidanceMuslim</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" style="text-decoration:none;">Guidance<span
+                    class="highlight">Muslim</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Beranda</a></li>
+                <li class="active"><a href="niat.html">Niat</a></li>
+                <li><a href="sholat.html">Panduan Sholat</a></li>
+                <li><a href="doa.html">Doa Harian</a></li>
+                <li><a href="../quiz/quiz.html">Kuis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="section-header">
+            <h2>Niat Sholat Fardhu</h2>
+            <p>Berniat di dalam hati ikhlas karena Allah Ta'ala</p>
+        </header>
+
+        <div class="prayer-list" id="niat-list">
+            <!-- Content Injected Here -->
+        </div>
+    </main>
+
+    <script src="../data/sholatData.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('niat-list');
+            if (window.sholatData) {
+                container.innerHTML = window.sholatData.map(p => `
+                    <div class="step-card">
+                        <h3>${p.name}</h3>
+                        <p class="translation-text" style="margin-bottom:15px; ">${p.rokaat} Rakaat</p>
+                        <div class="arabic-text">${p.niat.arabic}</div>
+                        <div class="latin-text">${p.niat.latin}</div>
+                        <div class="translation-text">"${p.niat.translation}"</div>
+                    </div>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+
+</html>

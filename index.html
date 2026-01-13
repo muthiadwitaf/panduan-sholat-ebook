@@ -5,163 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Learning Panduan Sholat & Doa Harian</title>
-    <meta name="description" content="Aplikasi E-Learning Interaktif Panduan Sholat dan Doa Harian Berbasis E-Book">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body>
-
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">Guidance<span class="highlight">Muslim</span></div>
+            <a href="index.html" class="logo" style="text-decoration:none;">Guidance<span
+                    class="highlight">Muslim</span></a>
             <ul class="nav-links">
-                <li class="active" data-target="home">Beranda</li>
-                <li data-target="sholat">Sholat</li>
-                <li data-target="doa">Doa Harian</li>
-                <li data-target="quiz">Kuis</li>
+                <li class="active"><a href="index.html">Beranda</a></li>
+                <li><a href="ebook/niat.html">Niat</a></li>
+                <li><a href="ebook/sholat.html">Panduan Sholat</a></li>
+                <li><a href="ebook/doa.html">Doa Harian</a></li>
+                <li><a href="quiz/quiz.html">Kuis</a></li>
             </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
-
-        <!-- Home Section -->
-        <section id="home" class="view active">
-            <div class="hero">
-                <div class="hero-text">
-                    <h1>Panduan Sholat & Doa Harian</h1>
-                    <p>Belajar sholat dan doa sehari-hari dengan mudah, interaktif, dan menyenangkan.</p>
-                    <button class="btn btn-primary" onclick="app.navigateTo('sholat')">Mulai Belajar</button>
-                    <button class="btn btn-outline" onclick="app.navigateTo('ebook')">Buka E-Book</button>
-                </div>
-                <div class="hero-image">
-                    <div class="placeholder-art">🤲</div>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>E-Learning Panduan Sholat & Doa Harian</h1>
+                <p>Belajar sholat dan doa sehari-hari dengan metode E-Book Interaktif. Mudah, Lengkap, dan Praktis.</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <a href="ebook/sholat.html" class="btn btn-primary" style="text-decoration:none;">Mulai Belajar</a>
+                    <a href="quiz/quiz.html" class="btn btn-outline" style="text-decoration:none;">Uji Pemahaman</a>
                 </div>
             </div>
-
-            <div class="features">
-                <div class="feature-card" onclick="app.navigateTo('sholat')">
-                    <div class="icon">🕌</div>
-                    <h3>Panduan Sholat</h3>
-                    <p>Lengkap dengan Niat, Bacaan Arab, Latin, dan Terjemahan.</p>
-                </div>
-                <div class="feature-card" onclick="app.navigateTo('doa')">
-                    <div class="icon">📖</div>
-                    <h3>Doa Harian</h3>
-                    <p>Kumpulan doa sehari-hari untuk aktivitasmu.</p>
-                </div>
-                <div class="feature-card" onclick="app.navigateTo('quiz')">
-                    <div class="icon">❓</div>
-                    <h3>Kuis Interaktif</h3>
-                    <p>Uji pemahamanmu tentang sholat dan doa.</p>
-                </div>
-                <div class="feature-card" onclick="app.navigateTo('ebook')">
-                    <div class="icon">📚</div>
-                    <h3>Mode E-Book</h3>
-                    <p>Mode membaca linear seperti buku.</p>
-                </div>
+            <div class="hero-image">
+                <div class="placeholder-art">📖</div>
             </div>
         </section>
 
-        <!-- Sholat Section -->
-        <section id="sholat" class="view">
-            <header class="section-header">
-                <h2>Panduan Sholat Fardhu</h2>
-                <p>Pilih sholat yang ingin dipelajari</p>
-            </header>
-            <div class="prayer-list" id="prayer-list-container">
-                <!-- Injected by JS -->
-            </div>
-
-            <!-- Prayer Detail View (Hidden by default) -->
-            <div id="prayer-detail" class="hidden">
-                <button class="btn-back" onclick="app.closePrayerDetail()">← Kembali</button>
-                <div id="prayer-detail-content"></div>
-            </div>
+        <section class="features">
+            <a href="ebook/niat.html" class="feature-card" style="text-decoration:none; color:inherit;">
+                <div class="icon">🤲</div>
+                <h3>Niat Sholat</h3>
+                <p>Pelajari niat sholat fardhu 5 waktu lengkap.</p>
+            </a>
+            <a href="ebook/sholat.html" class="feature-card" style="text-decoration:none; color:inherit;">
+                <div class="icon">🕌</div>
+                <h3>Tata Cara Sholat</h3>
+                <p>Panduan gerakan dan bacaan sholat step-by-step.</p>
+            </a>
+            <a href="ebook/doa.html" class="feature-card" style="text-decoration:none; color:inherit;">
+                <div class="icon">📿</div>
+                <h3>Doa Harian</h3>
+                <p>Himpunan doa sehari-hari untuk aktivitasmu.</p>
+            </a>
+            <a href="quiz/quiz.html" class="feature-card" style="text-decoration:none; color:inherit;">
+                <div class="icon">❓</div>
+                <h3>Kuis Interaktif</h3>
+                <p>Uji wawasan keislamanmu di sini.</p>
+            </a>
         </section>
-
-        <!-- Doa Section -->
-        <section id="doa" class="view">
-            <header class="section-header">
-                <h2>Kumpulan Doa Harian</h2>
-                <p>Amalkan doa dalam setiap aktivitas</p>
-            </header>
-            <div class="doa-container">
-                <input type="text" id="doa-search" placeholder="Cari doa..." onkeyup="app.filterDoa()">
-                <div class="doa-list" id="doa-list-container">
-                    <!-- Injected by JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Quiz Section -->
-        <section id="quiz" class="view">
-            <header class="section-header">
-                <h2>Kuis Pengetahuan</h2>
-                <p>Seberapa jauh pemahamanmu?</p>
-            </header>
-            <div class="quiz-container" id="quiz-container">
-                <div class="quiz-start" id="quiz-start-screen">
-                    <p>Siap untuk memulai kuis?</p>
-                    <button class="btn btn-primary" onclick="app.startQuiz()">Mulai Kuis</button>
-                </div>
-                <div class="quiz-question hidden" id="quiz-question-screen">
-                    <div class="progress-bar">
-                        <div class="progress" id="quiz-progress"></div>
-                    </div>
-                    <h3 id="question-text">Pertanyaan akan muncul di sini</h3>
-                    <div class="options-grid" id="answer-options">
-                        <!-- Options injected -->
-                    </div>
-                </div>
-                <div class="quiz-result hidden" id="quiz-result-screen">
-                    <h3>Hasil Kuis</h3>
-                    <p>Skor Anda: <span id="final-score">0</span> / <span id="total-questions">0</span></p>
-                    <button class="btn btn-primary" onclick="app.resetQuiz()">Coba Lagi</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Ebook Mode Section (Simple Implementation) -->
-        <section id="ebook" class="view">
-            <header class="section-header">
-                <h2>E-Book Mode</h2>
-                <div class="ebook-controls">
-                    <button onclick="app.prevChapter()">Prev</button>
-                    <span id="chapter-title">Cover</span>
-                    <button onclick="app.nextChapter()">Next</button>
-                </div>
-            </header>
-            <div class="ebook-content" id="ebook-content">
-                <div class="ebook-page">
-                    <h3>Selamat Datang di E-Book Panduan Sholat</h3>
-                    <p>Gunakan tombol navigasi di atas untuk berpindah halaman.</p>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer>
-        <p>&copy; 2024 E-Learning Panduan Sholat. All Rights Reserved.</p>
+        <p>&copy; 2024 E-Learning Panduan Sholat. Berbasis E-Book.</p>
     </footer>
-
-    <script src="data/sholatData.js"></script>
-    <script src="data/doaData.js"></script>
-    <script src="data/quizData.js"></script>
-    <script src="js/app.js"></script>
 </body>
 
 </html>

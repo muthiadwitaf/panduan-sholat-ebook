@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panduan Sholat - GuidanceMuslim</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Specific page styles overrides */
+        .page-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .audio-player-container {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" style="text-decoration:none;">Guidance<span
+                    class="highlight">Muslim</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Beranda</a></li>
+                <li><a href="niat.html">Niat</a></li>
+                <li class="active"><a href="sholat.html">Panduan Sholat</a></li>
+                <li><a href="doa.html">Doa Harian</a></li>
+                <li><a href="../quiz/quiz.html">Kuis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content page-content">
+        <header class="section-header">
+            <h2>Panduan Sholat Lengkap</h2>
+            <p>Gerakan dan Bacaan dari Takbir hingga Salam</p>
+        </header>
+
+        <div id="sholat-detail">
+            <!-- We will load Subuh as the default example for the guide -->
+        </div>
+
+    </main>
+
+    <script src="../data/sholatData.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('sholat-detail');
+            // We focus on the steps which are generic for most prayers, getting them from 'subuh' data
+            const prayer = window.sholatData.find(p => p.id === 'subuh');
+
+            if (prayer) {
+                const stepsHtml = prayer.steps.map((step, index) => {
+                    let audioHtml = '';
+                    // SPECIAL HANDLING FOR AL-FATIHAH (Use EveryAyah)
+                    if (step.audio === 'al_fatihah') {
+                        // Generate 7 players for Al-Fatihah
+                        const verses = [
+                            { num: 1, text: "Bismillaahirrahmaanirrahiim" },
+                            { num: 2, text: "Alhamdulillaahi rabbil-'aalamiin" },
+                            { num: 3, text: "Ar-rahmaanir-rahiim" },
+                            { num: 4, text: "Maaliki yaumid-diin" },
+                            { num: 5, text: "Iyyaaka na'budu wa iyyaaka nasta'iin" },
+                            { num: 6, text: "Ihdinas-siraatal-mustaqiim" },
+                            { num: 7, text: "Siraatallaziina an'amta 'alaihim ghairil-maghduubi 'alaihim walad-daalliin" }
+                        ];
+
+                        let versesHtml = verses.map(v => {
+                            // Pad number to 3 digits like 001, 002...
+                            // Surah Al-Fatihah is Surah 001. So format is 001 + AyahNum (001..007)
+                            const ayahNum = String(v.num).padStart(3, '0');
+                            const url = `https://everyayah.com/data/Alafasy_128kbps/001${ayahNum}.mp3`;
+                            return `
+                                <div style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                                    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:5px;">
+                                        <span style="font-weight:bold; font-size:0.9rem; color:var(--primary-color);">Ayat ${v.num}</span>
+                                        <audio controls style="height:35px; width:220px; max-width:100%;">
+                                            <source src="${url}" type="audio/mpeg">
+                                        </audio>
+                                    </div>
+                                    <p style="font-size:0.95rem; font-style:italic; color:#555; margin-top:5px;">"${v.text}"</p>
+                                </div>
+                             `;
+                        }).join('');
+
+                        audioHtml = `
+                        <div class="audio-player-container" style="background:#f9f9f9; padding:20px; border-radius:12px; border:1px solid #eee;">
+                            <p style="font-size:1rem; font-weight:bold; margin-bottom:15px; color:var(--primary-color);">🔊 Audio Per Ayat (Mishary Rashid Alafasy)</p>
+                            ${versesHtml}
+                        </div>
+                       `;
+                    } else if (step.audio) {
+                        // Use local fallback/generated for others
+                        audioHtml = `
+                           <button class="btn-outline" style="font-size:0.8rem; padding: 5px 10px; margin-top:10px;" onclick="playLocalAudio('${step.audio}')">🔊 Dengarkan</button>
+                       `;
+                    }
+
+                    return `
+                    <div class="step-card">
+                        <div class="step-header">
+                            <div class="step-number">${index + 1}</div>
+                            <div class="step-title">${step.name}</div>
+                        </div>
+                        <p class="description">${step.description}</p>
+                        <div class="arabic-text">${step.arabic}</div>
+                        <div class="latin-text">${step.latin}</div>
+                        <div class="translation-text">"${step.translation}"</div>
+                        ${audioHtml}
+                    </div>
+                `;
+                }).join('');
+
+                container.innerHTML = `
+                  <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; border-left: 5px solid var(--primary-color); box-shadow: var(--shadow);">
+                      <h3>Tata Cara Umum</h3>
+                      <p>Panduan ini menggunakan contoh gerakan sholat Subuh (2 Rakaat). Gerakan sholat lainnya (Zuhur, Asar, dll) pada dasarnya sama, hanya jumlah rakaat yang berbeda.</p>
+                  </div>
+                  ${stepsHtml}
+               `;
+            }
+        });
+
+        function playLocalAudio(filename) {
+            // Path relative to ebook/sholat.html is ../assets/audio/
+            if (!filename.endsWith('.mp3')) filename += '.mp3';
+            const audioPath = `../assets/audio/${filename}`;
+            new Audio(audioPath).play().catch(e => alert("Audio file not found offline/locally: " + filename));
+        }
+    </script>
+</body>
+
+</html>

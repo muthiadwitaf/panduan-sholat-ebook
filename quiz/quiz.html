@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kuis Interaktif - GuidanceMuslim</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" style="text-decoration:none;">Guidance<span
+                    class="highlight">Muslim</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Beranda</a></li>
+                <li><a href="../ebook/niat.html">Niat</a></li>
+                <li><a href="../ebook/sholat.html">Panduan Sholat</a></li>
+                <li><a href="../ebook/doa.html">Doa Harian</a></li>
+                <li class="active"><a href="quiz.html">Kuis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="quiz" class="view active" style="display:block;">
+            <header class="section-header">
+                <h2>Kuis Pengetahuan</h2>
+                <p>Seberapa jauh pemahamanmu?</p>
+            </header>
+            <div class="quiz-container" id="quiz-container">
+                <div class="quiz-start" id="quiz-start-screen">
+                    <p>Siap untuk memulai kuis?</p>
+                    <button class="btn btn-primary" onclick="quizApp.startQuiz()">Mulai Kuis</button>
+                </div>
+                <div class="quiz-question hidden" id="quiz-question-screen">
+                    <div class="progress-bar">
+                        <div class="progress" id="quiz-progress"></div>
+                    </div>
+                    <h3 id="question-text">Pertanyaan akan muncul di sini</h3>
+                    <div class="options-grid" id="answer-options">
+                        <!-- Options injected -->
+                    </div>
+                    <p id="feedback-text"
+                        style="text-align:center; font-weight:bold; margin-top:20px; font-size:1.2rem; min-height:1.5em;">
+                    </p>
+                </div>
+                <div class="quiz-result hidden" id="quiz-result-screen">
+                    <h3>Hasil Kuis</h3>
+                    <p>Skor Anda: <span id="final-score">0</span> / <span id="total-questions">0</span></p>
+                    <button class="btn btn-primary" onclick="quizApp.resetQuiz()">Coba Lagi</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../data/quizData.js"></script>
+    <script>
+        // Inline simple quiz logic to avoid dependency on global `app.js` which assumes SPA
+        const quizApp = {
+            state: { score: 0, currentQuestionIndex: 0 },
+            startQuiz: () => {
+                quizApp.state.score = 0;
+                quizApp.state.currentQuestionIndex = 0;
+                document.getElementById('quiz-start-screen').classList.add('hidden');
+                document.getElementById('quiz-question-screen').classList.remove('hidden');
+                document.getElementById('quiz-result-screen').classList.add('hidden');
+                quizApp.showQuestion();
+            },
+            showQuestion: () => {
+                const questionData = window.quizData[quizApp.state.currentQuestionIndex];
+                document.getElementById('question-text').innerText = questionData.question;
+                const optionsDiv = document.getElementById('answer-options');
+                document.getElementById('feedback-text').innerText = ""; // Clear previous feedback
+                optionsDiv.innerHTML = '';
+                questionData.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.innerText = answer.text;
+                    button.classList.add('option-btn');
+                    button.onclick = () => quizApp.selectAnswer(answer, button);
+                    optionsDiv.appendChild(button);
+                });
+                const progress = ((quizApp.state.currentQuestionIndex) / window.quizData.length) * 100;
+                document.getElementById('quiz-progress').style.width = `${progress}%`;
+            },
+            selectAnswer: (answer, button) => {
+                const buttons = document.querySelectorAll('.option-btn');
+                const feedbackEl = document.getElementById('feedback-text');
+                buttons.forEach(btn => btn.disabled = true);
+
+                if (answer.correct) {
+                    button.classList.add('correct');
+                    feedbackEl.innerText = "✅ Jawaban Benar!";
+                    feedbackEl.style.color = "var(--primary-color)";
+                    quizApp.state.score++;
+                } else {
+                    button.classList.add('incorrect');
+                    feedbackEl.innerText = "❌ Kurang Tepat";
+                    feedbackEl.style.color = "#dc3545";
+                    window.quizData[quizApp.state.currentQuestionIndex].answers.forEach((ans, idx) => {
+                        if (ans.correct) buttons[idx].classList.add('correct');
+                    });
+                }
+                setTimeout(() => {
+                    quizApp.state.currentQuestionIndex++;
+                    if (quizApp.state.currentQuestionIndex < window.quizData.length) {
+                        quizApp.showQuestion();
+                    } else {
+                        quizApp.showResult();
+                    }
+                }, 1500);
+            },
+            showResult: () => {
+                document.getElementById('quiz-question-screen').classList.add('hidden');
+                document.getElementById('quiz-result-screen').classList.remove('hidden');
+                document.getElementById('final-score').innerText = quizApp.state.score;
+                document.getElementById('total-questions').innerText = window.quizData.length;
+            },
+            resetQuiz: () => {
+                quizApp.startQuiz();
+            }
+        };
+    </script>
+</body>
+
+</html>
