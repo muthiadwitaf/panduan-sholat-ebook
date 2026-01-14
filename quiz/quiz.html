@@ -42,7 +42,6 @@
                     </div>
                     <h3 id="question-text">Pertanyaan akan muncul di sini</h3>
                     <div class="options-grid" id="answer-options">
-                        <!-- Options injected -->
                     </div>
                     <p id="feedback-text"
                         style="text-align:center; font-weight:bold; margin-top:20px; font-size:1.2rem; min-height:1.5em;">
@@ -59,7 +58,6 @@
 
     <script src="../data/quizData.js"></script>
     <script>
-        // Inline simple quiz logic to avoid dependency on global `app.js` which assumes SPA
         const quizApp = {
             state: { score: 0, currentQuestionIndex: 0 },
             startQuiz: () => {
@@ -125,5 +123,6 @@
         };
     </script>
 </body>
+
 
 </html>
