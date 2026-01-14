@@ -12,7 +12,7 @@ const app = {
         app.setupMobileMenu();
     },
 
-    // Navigation Logic
+    //logic navigation
     setupNavigation: () => {
         const navLinks = document.querySelectorAll('.nav-links li');
         navLinks.forEach(link => {
@@ -20,11 +20,9 @@ const app = {
                 const target = link.dataset.target;
                 app.navigateTo(target);
 
-                // Update active state
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
-                // Close mobile menu if open
                 const nav = document.querySelector('.nav-links');
                 const burger = document.querySelector('.menu-toggle');
                 nav.classList.remove('active');
@@ -34,11 +32,9 @@ const app = {
     },
 
     navigateTo: (viewId) => {
-        // Hide all views
         document.querySelectorAll('.view').forEach(view => {
             view.classList.remove('active');
         });
-        // Show target view
         const targetView = document.getElementById(viewId);
         if (targetView) {
             targetView.classList.add('active');
@@ -51,24 +47,13 @@ const app = {
         const nav = document.querySelector('.nav-links');
 
         burger.addEventListener('click', () => {
-            // Toggle Nav
             nav.classList.toggle('active');
-            // Burger Animation
             burger.classList.toggle('toggle');
         });
 
-        // Add CSS for mobile menu visibility since it wasn't in main CSS explicitly for class 'active'
-        // Just hacking it in via JS is messy, assuming style.css handles .nav-links.active (Wait, I might have missed that in CSS)
-        // Let's check CSS... Ah, I need to ensure CSS supports the mobile menu toggle.
-        // I will add the CSS for mobile menu dynamic class at the end of this script or just hope styling handles it?
-        // Actually, my CSS had:
-        // @media (max-width: 768px) { .nav-links { display: none; } }
-        // I need to add .nav-links.active { display: flex; ... }
-        // I will inject a style tag for this fix as I don't want to edit CSS file again if I can avoid it, but editing CSS is cleaner.
-        // I will edit CSS file after this.
     },
 
-    // Sholat Logic
+    //logic sholat
     renderSholatList: () => {
         const container = document.getElementById('prayer-list-container');
         if (!container || !window.sholatData) return;
@@ -96,7 +81,6 @@ const app = {
         header.classList.add('hidden');
         document.getElementById('prayer-detail').classList.remove('hidden');
 
-        // Build generic steps if empty (placeholder logic)
         let stepsHtml = '';
         const stepsData = prayer.steps.length > 0 ? prayer.steps : app.getGenericSteps(prayer.rokaat);
 
@@ -140,7 +124,6 @@ const app = {
     },
 
     getGenericSteps: (rokaat) => {
-        // Just a fallback to show "Steps are standard" if data is missing
         return [
             {
                 name: 'Gerakan Sholat Standar',
@@ -152,7 +135,7 @@ const app = {
         ];
     },
 
-    // Doa Logic
+    //logic do'a
     renderDoaList: () => {
         const container = document.getElementById('doa-list-container');
         if (!container || !window.doaData) return;
@@ -189,7 +172,7 @@ const app = {
         }
     },
 
-    // Quiz Logic
+    //logic kuis
     startQuiz: () => {
         app.state.score = 0;
         app.state.currentQuestionIndex = 0;
@@ -214,13 +197,12 @@ const app = {
             optionsDiv.appendChild(button);
         });
 
-        // Update progress
+        //update progress
         const progress = ((app.state.currentQuestionIndex) / window.quizData.length) * 100;
         document.getElementById('quiz-progress').style.width = `${progress}%`;
     },
 
     selectAnswer: (answer, button) => {
-        // Disable all buttons
         const buttons = document.querySelectorAll('.option-btn');
         buttons.forEach(btn => btn.disabled = true);
 
@@ -229,8 +211,6 @@ const app = {
             app.state.score++;
         } else {
             button.classList.add('incorrect');
-            // Show correct one
-            // We need to match text content or store index, here loop is easiest
             window.quizData[app.state.currentQuestionIndex].answers.forEach((ans, idx) => {
                 if (ans.correct) {
                     buttons[idx].classList.add('correct');
@@ -259,7 +239,7 @@ const app = {
         app.startQuiz();
     },
 
-    // E-Book Logic (Simplified placeholder)
+    //logic ebook
     prevChapter: () => {
         alert("Fitur navigasi halaman E-Book akan diimplementasikan dengan konten lengkap.");
     },
@@ -268,10 +248,8 @@ const app = {
         alert("Fitur navigasi halaman E-Book akan diimplementasikan dengan konten lengkap.");
     },
 
-    // Audio Utility
+    //audio
     playAudio: (name) => {
-        // Check if file exists logic is hard in pure client side without try/catch fetch
-        // For now, we simulate
         console.log(`Playing audio for: ${name}`);
         const audioPath = `assets/audio/${name.replace(/\s+/g, '_').toLowerCase()}.mp3`;
 
@@ -283,5 +261,4 @@ const app = {
     }
 };
 
-// Initialize App
 document.addEventListener('DOMContentLoaded', app.init);
