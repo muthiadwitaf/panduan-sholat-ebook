@@ -2,12 +2,10 @@ import asyncio
 import edge_tts
 import os
 
-# Voice setting: Ar-SA-HamedNeural is a high quality male voice standard in Edge
 VOICE = "ar-SA-HamedNeural" 
 
-# Data dictionary mapping filename to Arabic text
 DATA = {
-    # Sholat Components
+    #data gerakan sholat
     "takbiratul_ihram": "الله أكبر",
     "al_fatihah": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ. ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ. ٱلرَّحْمَٰنِ ٱلرَّحِيمِ. مَٰلِكِ يَوْمِ ٱلدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ. صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّالِّينَ",
     "rukuk": "سُبْحَانَ رَبِّىَ الْعَظِيمِ وَبِحَمْدِهِ",
@@ -17,10 +15,10 @@ DATA = {
     "tahiyat_akhir": "التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلَّهِ السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِىُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ",
     "salam": "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ",
     
-    # Niat Sholat (Sample for Subuh)
+    #niat sholat (sample sholat subuh)
     "niat_sholat_subuh": "أُصَلِّى فَرْضَ الصُّبْح رَكَعتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لله تَعَالَى",
 
-    # Doa Harian
+    #doa harian
     "Doa Bangun Tidur": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
     "Doa Sebelum Tidur": "بِسْمِكَ اللّهُمَّ أَحْيَا وَبِسْمِكَ أَمُوتُ",
     "Doa Sebelum Makan": "الْلَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ",
@@ -37,13 +35,11 @@ async def main():
     print(f"Generating audio files in '{OUTPUT_DIR}' using voice '{VOICE}'...")
     
     for name, text in DATA.items():
-        # Sanitize filename
         filename = name.lower().replace(" ", "_").replace("’", "").replace("'", "") + ".mp3"
         filepath = os.path.join(OUTPUT_DIR, filename)
         
         print(f"Talking: {filename}...")
         try:
-            # We add rate=-10% for slower, clearer recitation
             communicate = edge_tts.Communicate(text, VOICE, rate="-10%")
             await communicate.save(filepath)
         except Exception as e:
@@ -53,3 +49,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
